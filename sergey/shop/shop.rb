@@ -40,7 +40,6 @@ class Item
   def total_cost
     @items.inject(0){ |sum, item| sum + item.price }
   end
-
 end
 
 
