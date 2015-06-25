@@ -1,21 +1,20 @@
 class Shop
-
 	attr_accessor :name, :items
 
-	def initialize name, items = Array.new
+	def initialize(name, items = Array.new)
 		@name = name
 		@items = items
 	end
 
-	def add item
+	def add(item)
 		items.push(item) if item.class == Item
 	end
 
 	def all_items
-		items.each { |item| puts "#{item.name} #{item.price}" }
+		items.each { |item| puts item.to_s }
 	end
 
-	def delete_by_name name
+	def delete_by_name(name)
 		items.delete_if { |item| item.name == name }
 	end
 
@@ -24,7 +23,7 @@ class Shop
 		items.each { |item| cost += item.price * item.quantity } 
 	end
 
-  def add_batch *pack_of_items
+  def add_batch(*pack_of_items)
     pack_of_items.each_with_index do |item, index|
       if item.class == Item
         items.push(item)
@@ -34,7 +33,7 @@ class Shop
     end
   end
 
-	def remove_same_for item_name, number 
+	def remove_same_for(item_name, number)
 		item = items.detect { |item| item.name == item_name }
 		if item.quantity >= number
 		  item.quantity - number 
@@ -43,7 +42,7 @@ class Shop
 		end
 	end
 
-	def find_by_category category
+	def find_by_category(category)
 		items.select { |item| item.category == category }
 	end
 
