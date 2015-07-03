@@ -1,13 +1,19 @@
 class Shop
   attr_accessor :name, :items
 
-  def initialize(name, items = Array.new)
+  def initialize(name, items = [])
     @name = name
     @items = items
   end
 
-  def add(item)
-    items.push(item) if item.class == Item
+  def add(*set_of_items)
+    set_of_items.each_with_index do |item, index|
+      if item.is_a? Item
+        items.push(item)
+      else
+        puts "sorry, but item #{index} is not valid"
+      end
+    end
   end
 
   def all_items
@@ -22,16 +28,6 @@ class Shop
     cost = 0
     items.each { |item| cost += item.price * item.quantity }
     return cost
-  end
-
-  def add_batch(*pack_of_items)
-    pack_of_items.each_with_index do |item, index|
-      if item.class == Item
-        items.push(item)
-      else
-        puts "sorry, but item #{index} is not valid"
-      end
-    end
   end
 
   def remove_same_for(item_name, number)
