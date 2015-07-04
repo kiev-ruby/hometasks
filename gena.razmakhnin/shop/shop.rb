@@ -25,13 +25,12 @@ class Shop
   end
 
   def total_cost
-    cost = 0
-    items.each { |item| cost += item.price * item.quantity }
-    return cost
+    items.inject { |cost, item| cost + item.price * item.quantity }
   end
 
   def remove_same_for(item_name, number)
     item = items.detect { |item| item.name == item_name }
+    raise 'sorry, but we can\'t find your item' if item.nil?
     if item.quantity >= number
       item.quantity - number
     else
