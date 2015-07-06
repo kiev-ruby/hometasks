@@ -7,6 +7,11 @@ class Store
     @items = []
   end
 
+  def show_items
+    puts "\nItems in #{name} store:\n "
+    items.each { |item| puts item.to_s }
+  end
+
   def add_item(item)
     items << item unless item.name.nil?
   end
@@ -16,12 +21,14 @@ class Store
   end
 
   def delete_item(name)
-    items.delete_if { |item| item.name == name }
-  end
-
-  def show_items
-    puts "\nItems in #{name} store:\n "
-    items.each { |item| puts item.to_s }
+    items.each do |item|
+      if item.name == name
+        items.delete(item)
+        puts "Item #{name} was deleted"
+        return nil
+      end
+    end
+    puts "Item #{name} not found"
   end
 
   def total_cost
@@ -31,11 +38,32 @@ class Store
   end
 
   def set_quantity(name, quantity)
-    items.each { |item| item.quantity = quantity if item.name == name }
+    items.each do |item|
+      if item.name == name
+        old_quantity = item.quantity
+        item.quantity = quantity.to_i
+        puts "Quantity of #{name} was changed form #{old_quantity} to #{quantity}"
+        return nil
+      end
+    end
+    puts "Item #{name} not found"
   end
 
   def remove_quantity(name, quantity)
-    items.each { |item| item.quantity -= quantity if item.name == name && item.quantity >= quantity }
+    quantity = quantity.to_i
+    items.each do |item|
+      if item.name == name
+        if item.quantity >= quantity
+          old_quantity = item.quantity
+          item.quantity -= quantity
+          puts "Quantity was reduced from #{old_quantity} to #{old_quantity - quantity}"
+        else
+          puts "You dont have enough items, enter #{item.quantity} or less"
+        end
+        return nil
+      end
+    end
+    puts "Item #{name} not found"
   end
 
   def select_by_category(category)

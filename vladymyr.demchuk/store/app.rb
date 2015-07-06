@@ -3,54 +3,87 @@ require_relative 'item.rb'
 
 puts '----------New running--------------'
 
-=begin
-store = Store.new("Computer Items")
-
-items = []
-items << Item.new("Keyboard", 20, 4, "periphery") << Item.new("Mouse", 10, 2, "periphery") << Item.new("Proccessor", 100, 5, "main") << Item.new("Monitor", 200, 3, "display") << Item.new("Mother Board", 100, 5, "main")
-
-items.each { |item| store.add_item(item) }
-
-store.show_items
-
-puts "--- Order by price ---"
-store.order_by_price
-store.show_items
-
-puts "--- Order by name ---"
-store.order_by_name
-store.show_items
-
-puts "--- Show Category ---\n "
-store.show_category("periphery").to_s
-
-store.set_quantity("Mouse", 15)
-store.delete_item("Keyboard")
-store.remove_quantity("Monitor", 1)
-
-store.show_items
-
-puts store.total_cost
-
-item1 = Item.new("Sound Card", 5, 20, "main")
-item2 = Item.new("Random Access Memory", 40, 18, "main")
-item3 = Item.new("Hard Disk Drive", 120, 7, "main")
-
-store.add_items(item1, item2, item3)
-
-store.show_items
-=end
-
 def create_store
-  store2 = Store.new(random_name(10))
+  store = Store.new(random_name(10))
 
-  10.times { store2.add_item(Item.new(random_name(10), 1 + rand(99), 1 + rand(499), random_name(5))) }
+  5.times { store.add_item(Item.new(random_name(5), 1 + rand(99), 1 + rand(499), random_name(5))) }
 
-  store2.show_items
+  store
 end
 
 def random_name(n)
   [*('a'..'z')].sample(n).join.capitalize
 end
 
-create_store
+store = create_store
+# store.show_items
+
+store2 = create_store
+# store2.show_items
+
+stores = [store, store2]
+
+puts 'Welcome to app'
+puts 'Enter appropriate number to choose, please'
+
+puts '1: to work with existed stores'
+puts '2: create new store'
+puts '-1: to exit'
+choice = gets.chomp
+choice = choice.to_i
+case choice
+when 1
+  puts 'Choose store to operate'
+  # stores.each { |store| puts store.name }
+  stores.each_index { |index| puts "#{index + 1}: #{stores[index].name}" }
+  store_choice = gets.chomp
+  store_choice = stores[store_choice.to_i - 1]
+
+  # store_choice.show_items
+
+  puts 'Choose operation'
+  puts '1: show item'
+  puts '2: add item'
+  puts '3: delete item by name'
+  puts '4: see total cost of item'
+  puts '5: change quantity of item'
+  puts '6: reduce quantity of item'
+  puts '7: see some category of items'
+  puts '8: see items ordered by price'
+  puts '9: see items ordered by price'
+
+  operation_choice = gets.chomp
+  operation_choice = operation_choice.to_i
+
+  case operation_choice
+  when 1
+    store_choice.show_items
+  when 2
+    store_choice.add_item(Item.new(random_name(8), 1 + rand(99), 1 + rand(499), random_name(5)))
+    store_choice.show_items
+  when 3
+    puts 'Enter name'
+    name = gets.chomp
+    store_choice.delete_item(name)
+  when 4
+    puts "Total cost is #{store_choice.total_cost}$"
+  when 5
+    puts 'Enter item name'
+    name = gets.chomp
+    puts 'Enter new quantity'
+    quantity = gets.chomp
+    store_choice.set_quantity(name, quantity)
+  when 6
+    store_choice.show_items
+    puts 'Enter item name'
+    name = gets.chomp
+    puts 'Enter quantity to reduce'
+    quantity = gets.chomp
+    store_choice.remove_quantity(name, quantity)
+    store_choice.show_items
+  end
+
+when 2
+  stores.push(create_store)
+when -1
+end
