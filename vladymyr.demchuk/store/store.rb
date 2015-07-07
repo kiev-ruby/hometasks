@@ -71,14 +71,23 @@ class Store
   end
 
   def show_category(category)
-    items.each { |item| puts item.to_s if item.category == category }
+    mathes = 0
+    items.each do |item|
+      if item.category == category
+        mathes += 1
+        puts item.to_s
+      end
+    end
+    puts "#{category} category not found" if mathes == 0
   end
 
   def order_by_price
-    items.sort! { |item1, item2| item1.price <=> item2.price }
+    ordered_items = items.sort { |item1, item2| item1.price <=> item2.price }
+    ordered_items.each { |item| puts item.to_s }
   end
 
   def order_by_name
-    items.sort! { |item1, item2| item1.name <=> item2.name }
+    ordered_items = items.sort { |item1, item2| item1.name <=> item2.name }
+    ordered_items.each { |item| puts item.to_s }
   end
 end
