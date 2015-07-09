@@ -1,7 +1,6 @@
 require_relative 'shop.rb'
 require_relative 'items.rb'
 
-
 shop = Shop.new("Computer items")
 
 15.times do
