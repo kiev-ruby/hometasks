@@ -13,57 +13,27 @@ class Store
   end
 
   def add_item(item)
-    items << item unless item.name.nil?
+    items << item
   end
 
   def add_items(*new_items)
-    new_items.each { |item| items << item unless item.name.nil? }
+    new_items.each { |item| items << item }
   end
 
   def delete_item(name)
-    items.each do |item|
-      if item.name == name
-        items.delete(item)
-        puts "Item #{name} was deleted"
-        return nil
-      end
-    end
-    puts "Item #{name} not found"
+    items.delete_if { |item| item.name == name }
   end
 
   def total_cost
-    total_cost = 0
-    items.each { |item| total_cost += item.price * item.quantity }
-    total_cost
+    items.inject(0) { |a, e| a + e.price * e.quantity }
   end
 
   def set_quantity(name, quantity)
-    items.each do |item|
-      if item.name == name
-        old_quantity = item.quantity
-        item.quantity = quantity.to_i
-        puts "Quantity of #{name} was changed form #{old_quantity} to #{quantity}"
-        return nil
-      end
-    end
-    puts "Item #{name} not found"
+    items.each { |item| item.quantity = quantity if item.name == name }
   end
 
   def remove_quantity(name, quantity)
-    quantity = quantity.to_i
-    items.each do |item|
-      if item.name == name
-        if item.quantity >= quantity
-          old_quantity = item.quantity
-          item.quantity -= quantity
-          puts "Quantity was reduced from #{old_quantity} to #{old_quantity - quantity}"
-        else
-          puts "You dont have enough items, enter #{item.quantity} or less"
-        end
-        return nil
-      end
-    end
-    puts "Item #{name} not found"
+    items.each { |item| item.quantity -= quantity if item.name == name && item.quantity >= quantity }
   end
 
   def select_by_category(category)
@@ -71,23 +41,14 @@ class Store
   end
 
   def show_category(category)
-    mathes = 0
-    items.each do |item|
-      if item.category == category
-        mathes += 1
-        puts item.to_s
-      end
-    end
-    puts "#{category} category not found" if mathes == 0
+    items.each { |item| puts item.to_s if item.category == category }
   end
 
   def order_by_price
-    ordered_items = items.sort { |item1, item2| item1.price <=> item2.price }
-    ordered_items.each { |item| puts item.to_s }
+    items.sort! { |item1, item2| item1.price <=> item2.price }
   end
 
   def order_by_name
-    ordered_items = items.sort { |item1, item2| item1.name <=> item2.name }
-    ordered_items.each { |item| puts item.to_s }
+    items.sort! { |item1, item2| item1.name <=> item2.name }
   end
 end

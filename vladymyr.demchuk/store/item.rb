@@ -4,8 +4,7 @@ class Item
 
   def initialize(name, price, quantity, category)
     if name.length < 5
-      puts 'You cant create item with the name less than 5 letters!'
-      return
+      fail 'You cant create item with the name less than 5 letters!'
     else
       @name = name
     end
