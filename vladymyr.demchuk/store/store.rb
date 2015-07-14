@@ -12,10 +12,6 @@ class Store
     items.each { |item| puts item.to_s }
   end
 
-  def add_item(item)
-    items << item
-  end
-
   def add_items(*new_items)
     new_items.each { |item| items << item }
   end
@@ -25,15 +21,15 @@ class Store
   end
 
   def total_cost
-    items.inject(0) { |a, e| a + e.price * e.quantity }
+    items.inject(0) { |total, item| total + item.price * item.quantity }
   end
 
   def set_quantity(name, quantity)
-    items.each { |item| item.quantity = quantity if item.name == name }
+    items.find { |item| item.name == name }.quantity = quantity
   end
 
   def remove_quantity(name, quantity)
-    items.each { |item| item.quantity -= quantity if item.name == name && item.quantity >= quantity }
+    items.find { |item| item.name == name && item.quantity >= quantity }.quantity -= quantity
   end
 
   def select_by_category(category)
@@ -51,4 +47,21 @@ class Store
   def order_by_name
     items.sort! { |item1, item2| item1.name <=> item2.name }
   end
+
+  def order(type)
+    if type == 'price'
+      send :order_by_price
+    else
+      send :order_by_name
+    end
+  end
+
+  # another way
+  # def order(type)
+    # if type == "price"
+      # items.sort! { |item1, item2| item1.price <=> item2.price }
+    # else
+      # items.sort! { |item1, item2| item1.name <=> item2.name }
+    # end
+  # end
 end

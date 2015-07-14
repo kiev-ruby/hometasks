@@ -6,7 +6,7 @@ puts '----------New running--------------'
 def create_store
   store = Store.new(random_name(10))
 
-  5.times { store.add_item(Item.new(random_name(5), 1 + rand(99), 1 + rand(499), random_name(5))) }
+  5.times { store.add_items(Item.new(random_name(5), 1 + rand(99), 1 + rand(499), random_name(5))) }
 
   store
 end
