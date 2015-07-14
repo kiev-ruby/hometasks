@@ -1,11 +1,11 @@
 require_relative 'shop.rb'
-require_relative 'items.rb'
+require_relative 'item.rb'
 
-shop = Shop.new("Computer items")
+shop = Shop.new('Computer items')
 
-15.times do
-    item = Items.new("item#{ rand(100) }", rand(100), rand(15))
-    shop.add_item(item)
+5.times do
+  item = Item.new("item #{rand(10)}", rand(100), rand(15))
+  shop.add_item(item)
 end
 
 shop.info
