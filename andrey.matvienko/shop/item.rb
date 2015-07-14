@@ -1,4 +1,4 @@
-class Items
+class Item
   attr_accessor :item, :price, :quantity, :category
 
   def initialize item, price, category, quantity = 1
