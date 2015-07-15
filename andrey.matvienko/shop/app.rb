@@ -1,5 +1,6 @@
 require_relative 'shop.rb'
 require_relative 'item.rb'
+require_relative 'user.rb'
 
 shop = Shop.new('Computer items')
 
@@ -11,3 +12,6 @@ end
 shop.info
 shop.show_items
 shop.sort_by_price
+shop.show_items_by
+shop.sort_by_category
+
