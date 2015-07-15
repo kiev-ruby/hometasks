@@ -15,10 +15,19 @@ class Shop
     @items.select{|item| item.category == category }
   end
 
+  def show_by_name
+    puts items.sort{|x, y| x.item <=> y.item }
+  end
+
+  def show_by_category
+    puts items.sort{|x, y| x.category <=> y.category }
+  end
+
   def show_items_by(show_by)
     if show_by == 'name'
-      puts items.sort{|x, y| x.item <=> y.item }
-    else puts items.sort{|x, y| x.category <=> y.category }
+      send :show_by_name
+    else
+      send :show_by_category
     end
   end
 
@@ -35,10 +44,6 @@ class Shop
     puts items.sort{ |x, y| x.price <=> y.price }
   end
 
-  def sort_by_category
-    puts items.sort{|x, y| x.category <=> y.category }
-  end
-
   def cost_items
     @items.inject(0){|total, item| total + item.price }
   end
@@ -49,3 +54,4 @@ class Shop
     puts "\n"
   end
 end
+
