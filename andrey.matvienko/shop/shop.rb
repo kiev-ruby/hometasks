@@ -11,9 +11,19 @@ class Shop
     @items << item
   end
 
+  def items_by_category(category)
+    @items.select{|item| item.category == category }
+  end
+
+  def show_items_by(show_by)
+    if show_by == 'name'
+      puts items.sort{|x, y| x.item <=> y.item }
+    else puts items.sort{|x, y| x.category <=> y.category }
+    end
+  end
+
   def remove_item
-    remove_item = @items.find { |item| item.name == name }
-    @items.delete(remove_item)
+    @items.delete{|item| item.name == name }
   end
 
   def show_items
@@ -22,21 +32,15 @@ class Shop
   end
 
   def sort_by_price
-    puts items.sort { |x, y| x.price <=> y.price }
+    puts items.sort{ |x, y| x.price <=> y.price }
   end
 
-  def show_by_category(category_name)
-    @items.each do |items|
-      puts items if items.category = category_name
-    end
-  end
-
-  def show_by_name
-    puts items.sort { |x, y| x.name <=> y.name }
+  def sort_by_category
+    puts items.sort{|x, y| x.category <=> y.category }
   end
 
   def cost_items
-    @items.inject(0) { |total, item| total + item.price }
+    @items.inject(0){|total, item| total + item.price }
   end
 
   def info
@@ -45,4 +49,3 @@ class Shop
     puts "\n"
   end
 end
-
