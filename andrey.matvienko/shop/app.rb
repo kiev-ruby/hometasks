@@ -12,6 +12,3 @@ end
 shop.info
 shop.show_items
 shop.sort_by_price
-shop.show_items_by
-shop.sort_by_category
-
