@@ -11,6 +11,5 @@ class Item
 	def to_s
 		"Name: #{@name}; Category: #{@category}; Price: #{@price}; Quantity: #{quantity};"
 	end
-end	
-
+end
 
