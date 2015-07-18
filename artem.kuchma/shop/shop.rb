@@ -1,7 +1,7 @@
 class Shop
 	attr_accessor :name, :items
 
-	def initialize(shop_name="My shop", items = [])
+	def initialize(shop_name = "My shop", items = [])
 		@shop_name = shop_name
 		@items = items
 	end
@@ -21,10 +21,9 @@ class Shop
 
 	def add_item(name, category, price, quantity)		
 		item = Item.new(name, category, price, quantity)
-		items.each{|item|  @x = 1 if item.name == name}
 		if name.size <5
 			puts "The name should contain more than 5 symbols"
-		elsif @x == 1
+		elsif @items.count{|item| item.name == name} == 1
 			puts "This item alreadi exists!"
 		else				
 			@items << item
@@ -33,28 +32,52 @@ class Shop
 	end
 
 	def list_all_items
-		items.each do |item|
+		@items.each do |item|
 			puts item.to_s
 		end
 	end
 
 	def delete_by_name(name)
-		if items.reject! {|item| item.name == name}
+		if @items.reject! {|item| item.name == name}
 			puts "Item #{name} deleted!"
 		else
 			puts "Item not found. "
 		end
 	end
 
+	def total_cost
+		@total = 0
+		@items.each do |item|
+			@total += item.price * item.quantity
+		end
+		puts "Total cost of all items: #{@total}"
+	end
 
+	def remove_same_items(name, quantity_remove)
+		if @items.count{|item| item.name == name} == 0
+			puts "Item \'#{name}\' does not exist" 
+		else
+			@items.each do|item|			
+				if item.name == name  && item.quantity >= quantity_remove 
+					item.quantity -=  quantity_remove
+				elsif item.name == name  && item.quantity <= quantity_remove
+					puts "Items #{name} less than #{quantity_remove}"							
+				end				
+			 end
+		end
+	end
 
 end
 
 shop = Shop.new
 	#puts shop.print_shop_name
 	shop.content_creator(5)
-	shop.add_item("Comp_item_10", "cat", 23, 5)
+	shop.add_item("testt", "cat", 23, 4)
 	shop.list_all_items
 	#shop.delete_by_name("tes")
 	#shop.list_all_items
+	#shop.total_cost
+	shop.remove_same_items("testt", 3)
+	shop.list_all_items
+
 
