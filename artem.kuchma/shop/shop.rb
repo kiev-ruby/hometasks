@@ -12,12 +12,8 @@ class Shop
 		"The name of your store: #{@shop_name}"
 	end
 
-
-
-
 	def add_category(category)
-		
-		if @@shop_category.count {|shop_category| shop_category == category } == 1
+		if @@shop_category.count {|shop_category| shop_category == category} == 1
 			puts "This category alreadi exist"
 		else
 			@@shop_category << category
@@ -26,44 +22,30 @@ class Shop
 
 	def list_all_categorys
 		puts "Shop categorys:"
-		@@shop_category.each {|shop_category| puts "#{shop_category}  " }
-		
+		@@shop_category.each {|shop_category| puts "#{shop_category}  "}	
 	end
 
-# Function of generation test content. n - number of items
+# Function for generation test content. n - number of items
 	def content_creator(n)
 		@n = @@shop_category.size		
 		n.to_i.times do |item|
 			item += 1
-			item = Item.new("Comp_item_#{item}", "#{@@shop_category[rand(0..@n-1)]}", rand(1000), rand(5) )
+			item = Item.new("Comp_item_#{item}", "#{@@shop_category[rand(0..@n-1)]}", rand(1000), rand(5))
 			@items.push(item)			
 		end
 	end
-
-
-
-
-
-
-
-
-
-
-
-
 
 	def add_item(name, category, price, quantity)		
 		item = Item.new(name, category, price, quantity)
 		if name.size < 5
 			puts "The name should contain more than 5 symbols"
-		elsif @items.count{|item| item.name == name} == 1
+		elsif @items.count {|item| item.name == name} == 1
 			puts "This item alreadi exists!"
 		elsif @@shop_category.count {|shop_category| shop_category == category} == 0
 			puts "\'#{category}\' category does not exist"
 
 		else				
 			@items << item
-			#@items.each {|item| puts "#{item.name}, #{price}, #{quantity}"}
 		end
 	end
 
@@ -77,7 +59,7 @@ class Shop
 		if @items.reject! {|item| item.name == name}
 			puts "Item #{name} deleted!"
 		else
-			puts "Item not found. "
+			puts "Item not found."
 		end
 	end
 
@@ -90,7 +72,7 @@ class Shop
 	end
 
 	def remove_same_items(name, quantity_remove)
-		if @items.count{|item| item.name == name} == 0
+		if @items.count {|item| item.name == name} == 0
 			puts "Item \'#{name}\' does not exist" 
 		else
 			@items.each do|item|			
@@ -105,27 +87,49 @@ class Shop
 
 	def sort_by_category(category)
 		i = items.select {|item| item.category == category}
-		i.each {|item| puts item.to_s}
+		i.each {|item| puts item}
 		puts "In \'#{category}\' category items is absent" if i.empty? 
+	end
+
+	# function 'sort_by_name' takes only two arguments - 'increase' or 'decrease'
+	def sort_by_name(order = "increase")
+		if order == "increase"
+			puts @items.sort {|a,b| a.name <=> b.name}
+		elsif order == "decrease"
+			puts @items.sort {|a,b| b.name <=> a.name}
+		else
+			puts "Invalid argument"
+		end
+	end
+
+	# function 'sort_by_price' takes only two arguments - 'increase' or 'decrease'
+	def sort_by_price(order = "increase")
+		if order == "increase"
+			puts @items.sort {|a,b| a.price <=> b.price}
+		elsif order == "decrease"
+			puts @items.sort {|a,b| b.price <=> a.price}
+		else
+			puts "Invalid argument"
+		end
 	end
 
 end
 
-shop = Shop.new
-	#puts shop.print_shop_name
-	
-	
-	
-	#shop.delete_by_name("tes")
-	#
-	#shop.total_cost
-	#shop.remove_same_items("testt", 3)
-	#shop.list_all_items
-	shop.add_category("test")
-	shop.list_all_categorys
-shop.content_creator(5)
-#shop.list_all_items
-shop.add_item("testt", "cat-1", 23, 4)
-shop.list_all_items
-puts " "
-shop.sort_by_category("test")
+# function call for testing applications
+
+# shop = Shop.new
+	# puts shop.print_shop_name
+	# shop.delete_by_name("tes")
+	# shop.total_cost
+ 	# shop.remove_same_items("testt", 3)
+	# shop.list_all_items
+	# shop.add_category("test")
+	# shop.list_all_categorys
+	# shop.content_creator(5)
+	# shop.list_all_items
+	# shop.add_item("testt", "cat-1", 23, 4)
+	# shop.list_all_items
+	# puts " "
+	# shop.sort_by_category("test")
+	# shop.sort_by_price
+	# shop.sort_by_name
