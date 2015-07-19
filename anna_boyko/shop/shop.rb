@@ -24,10 +24,10 @@ class Shop
   end
 
   def remove_item(name)
-    delete( @items.find { |item| item.name == name } )
+    @items.delete(@items.find { |item| item.name == name })
   end
 
-  def delete_items(name, quantity = 0)
+  def delete_item(name, quantity = 1)
     @items.find { |item| item.name == name }.quantity -= quantity
   end
 
