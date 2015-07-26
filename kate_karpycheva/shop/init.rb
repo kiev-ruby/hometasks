@@ -13,8 +13,9 @@ require_relative 'computer_item'
 
 # shop1.show_items(:name)                     # To see what is already in the store
 #                                             # By default items are sorted by price
-# shop1.delete_item("samsung",2)
-# shop1.show_items
+# shop1.delete_item("asusVS",2)               # If you try to delete a non-existent item
+#                                             # you will get an error message
+# shop1.show_items(:name)
 
 # shop1.total_cost
 # p shop1.select_goods("laptop")               # Selecting goods by category

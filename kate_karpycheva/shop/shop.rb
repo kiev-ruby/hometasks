@@ -41,11 +41,10 @@ class Shop
 
   def delete_item(item_name, num)
     num.times do
-      for j in 0...@shop.length
-        if  @shop[j].name == item_name
-          @shop.delete_at(j)
-          break
-        end
+      if i = @shop.index{|i| i.name.eql? item_name}
+        @shop.delete_at(i)
+      else
+        return puts "No such item"
       end
     end
   end
