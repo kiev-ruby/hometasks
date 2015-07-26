@@ -27,17 +27,16 @@ class Shop
     { num => item } unless item.name.nil?
   end
 
-  def show_items
-    @shop.sort_by(&:price).each do |i|
-      puts "Item: #{i.name} with price #{i.price} and category #{i.category}"
+  def show_items(arg=:price)
+    if arg == :price || arg == :name
+      @shop.sort_by(&arg).each do |i|
+        puts "Item: #{i.name} with price #{i.price} and category #{i.category}"
+      end
     end
   end
 
   def select_goods(category)
-    puts 'Goods with such category: '
-    @shop.uniq.each do |item|
-      puts "Item: #{item.name} with price #{item.price}" if item.category == category
-    end
+    @shop.select { |i| i.category.eql? category }
   end
 
   def delete_item(item_name, num)
