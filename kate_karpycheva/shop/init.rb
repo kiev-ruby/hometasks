@@ -3,22 +3,18 @@ require_relative 'computer_item'
 
 # item1 = ComputerItem.new("samsung",101.45,"monitor")
 # item2 = ComputerItem.new("asusVS",100,"laptop")
-# item3 = ComputerItem.new("lenovo",50,"laptop")
+# item3 = ComputerItem.new("lenovo",50,"laptop",2)
 # shop1 = Shop.new("myshop")
 
-# package1 = shop1.package(5,item1)           # Number of the same goods
-# package2 = shop1.package(3,item2)           # can be set using 'package' method
+# shop1.add_items(item1,item2,item3)
+# shop1.set_quantity(5,item2)
 
-# shop1.add_items(package1,package2,item3)    # If you want to add set of items then use package.
-
-# shop1.show_items(:name)                     # To see what is already in the store
-#                                             # By default items are sorted by price
-# shop1.delete_item("asusVS",2)               # If you try to delete a non-existent item
-#                                             # you will get an error message
+# shop1.show_items(:name)
+# shop1.delete_item("asusVS",6)
 # shop1.show_items(:name)
 
-# shop1.total_cost
-# p shop1.select_goods("laptop")               # Selecting goods by category
-# shop = Shop.random_shop(5)                   # Creating random shop with random items
-#                                              # The quantity of goods is specified in brackets
+# p shop1.total_cost
+# p shop1.select_goods("laptop")
+# shop = Shop.random_shop(3)
+
 # shop.show_items
