@@ -19,7 +19,19 @@ class Shop
     end
   end
 
-  def display_goods
+  def set_number(name, n)
+    index = @goods.index { |i| i.name == name }
+    @goods[index].number = n
+  end
+
+  def display_goods(param = 1)
+    case param
+    when 1 then @goods.sort_by! { |item| item.name }
+    when 2 then @goods.sort_by! { |item| item.price }
+    when 3 then @goods.sort_by! { |item| item.number }
+    when 4 then @goods.sort_by! { |item| item.category }
+    else puts 'Cannot be sorted'
+    end
     puts "\nGoods list "
     @goods.each do |i|
       puts "#{i.name} \$#{i.price} #{i.number} pieces #{i.category}"

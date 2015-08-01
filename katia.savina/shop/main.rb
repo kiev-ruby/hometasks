@@ -18,7 +18,7 @@ def randomize
 end
 
 random_shop = randomize
-random_shop.display_goods
+random_shop.display_goods(1)
 
 # test
 shop = Shop.new('my_shop')
@@ -40,7 +40,8 @@ item6 = Item.new('keyboard', 10, 10, 'Peripherals')
 
 shop.add_many [item3, item4, item5, item6]
 shop.delete('SDcard', 3)
-shop.display_goods
+shop.set_number('keyboard', 29)
+shop.display_goods(2)
 shop.display_total
 
 cart1 = shop.order_by_name('SDcard')
