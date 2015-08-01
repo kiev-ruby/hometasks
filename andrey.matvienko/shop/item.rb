@@ -4,7 +4,7 @@ class Item
 
   def initialize(item, price, quantity = 1, category)
     @item = item
-    puts 'items must be <=5 letters size!' if item.size < 5
+    raise 'items must be < 5 letters size!' if item.size < 5
     @price = price
     @quantity = quantity
     @category = category
