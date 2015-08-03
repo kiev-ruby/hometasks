@@ -3,9 +3,14 @@ class Item
 
   def initialize(name, price, number = 1, category = 'Misc')
     fail 'ERROR: Too short name.' if name.size < 5
+
     @name = name
     @price = price
     @number = number
     @category = category
+  end
+
+  def to_s
+    puts "#{@name} \$#{@price} #{@number} pieces #{@category}"
   end
 end
