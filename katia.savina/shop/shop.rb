@@ -6,13 +6,9 @@ class Shop
     @goods = []
   end
 
-  def add_items(items)
-    if items.is_a? Array
-      items.each do |item|
-        @goods << item
-      end
-    else
-      @goods << items
+  def add_items(*items)
+    items.each do |item|
+      @goods << item
     end
   end
 
@@ -21,24 +17,24 @@ class Shop
   end
 
   def set_number(name, n)
-    @goods.find { |item| item.name == name } .number = n
+    @goods.find { |item| item.name == name }.number = n
   end
 
   def display_goods(sym = nil, type = :asc)
     @goods.sort_by!(&sym) if sym == :name || sym == :price || sym == :number || sym == :category
     @goods.reverse! if type == :desc
     puts "\nGoods list "
-    @goods.each(&:to_s)
+    puts @goods
   end
 
   def display_total
-    total = @goods.inject(0) { |a, e| a + e.price * e.number }
+    total = @goods.inject(0) { |result, item| result + item.price * item.number }
     puts "\nTotal: #{total}"
   end
 
   def select_goods(category)
     selection = @goods.select { |item| item.category == category }
-    selection.each(&:to_s)
+    puts selection
   end
 
   def order_by_name

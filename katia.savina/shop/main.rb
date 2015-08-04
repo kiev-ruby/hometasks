@@ -37,8 +37,9 @@ item3 = Item.new('keyboard', 20, 3, 'Peripherals')
 item4 = Item.new('SDcard', 25, 6, 'Memory')
 item5 = Item.new('flash', 10, 10, 'Memory')
 item6 = Item.new('keyboard', 10, 10, 'Peripherals')
+items = [item3, item4, item5, item6]
 
-shop.add_items [item3, item4, item5, item6]
+shop.add_items *items
 shop.delete('SDcard')
 shop.set_number('keyboard', 29)
 shop.display_goods(:price)
