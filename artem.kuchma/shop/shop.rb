@@ -1,30 +1,40 @@
 class Shop
-  attr_accessor :shop_name, :items
+  attr_accessor :name, :items
 
-  def initialize(shop_name = 'My shop', items = [])
-    @shop_name = shop_name
+  def initialize(name = 'My shop', items = [])
+    @name = name
     @items = items
   end
 
-  @@sh_cat = ['cat-1', 'cat-2', 'cat-3']
+  @@categories = ['cat-1', 'cat-2', 'cat-3']
 
   def add_category(category)
-    @@sh_cat << category if !@@sh_cat.include?(category)
+    @@categories << category unless @@categories.include?(category)
   end
 
-  def list_all_categorys
-    @@sh_cat.each { |sh_cat| puts "#{sh_cat}  " }
+  def list_all_categories
+    @@categories.each { |category| puts "#{category}  " }
+  end
+
+# Function for generation test content. n - number of items
+  def content_creator(n)
+    @n = @@categories.size
+    n.to_i.times do |item|
+      item += 1
+      item = Item.new("Comp_item_#{item}", "#{@@categories[rand(0..@n - 1)]}", rand(1000), rand(5))
+      @items.push(item)
+    end
   end
 
   def add_item(name, category, price, quantity)
     item = Item.new(name, category, price, quantity)
-    if name.size > 5 && @@sh_cat.include?(category) && @items.count { |item| item.name == name } != 1
+    if name.size > 5 && @@categories.include?(category) && @items.any? { |item| item.name == name } == false
       @items << item
     end
   end
 
   def list_all_items
-    @items.each { |item| puts item.to_s }
+    puts @items
   end
 
   def delete_by_name(name)
@@ -32,40 +42,34 @@ class Shop
   end
 
   def total_cost
-    @total = 0
-    @items.each { |item| @total += item.price * item.quantity }
+    total = items.inject(0) { |sum, item| sum + item.price * item.quantity}
   end
 
+#  def remove_same_items(name, quantity_remove)
+#    @items.each do|item|
+#      if item.name == name && item.quantity >= quantity_remove
+#        item.quantity -= quantity_remove
+#      end
+#    end
+#  end
+
   def remove_same_items(name, quantity_remove)
-    @items.each do|item|
-      if item.name == name && item.quantity >= quantity_remove
-        item.quantity -= quantity_remove
-      end
+    if @items.detect { |item| item.name == name && item.quantity >= quantity_remove}
+       @items.each { |item| item.quantity -= quantity_remove if item.name == name } 
     end
   end
 
   def sort_by_category(category)
-    i = items.select { |item| item.category == category }
-    i.each { |item| puts item }
+    items_by_category = items.select { |item| item.category == category }
+    items_by_category.each { |item| puts item }
   end
 
-  # function 'sort_by_name' takes only
-  # two arguments - 'increase' or 'decrease'
-  def sort_by_name(order = 'increase')
-    if order == 'increase'
-      puts @items.sort { |a, b| a.name <=> b.name }
-    elsif order == 'decrease'
-      puts @items.sort { |a, b| b.name <=> a.name }
+  def sort(sort_by = 'name', order = 'increase')
+    if sort_by == 'name'
+      sort_items = @items.sort! { |a, b| a.name <=> b.name }      
+    elsif sort_by == 'price'
+      sort_items = @items.sort! { |a, b| a.price <=> b.price }
     end
-  end
-
-  #  function 'sort_by_price' takes only
-  #  two arguments - 'increase' or 'decrease'
-  def sort_by_price(order = 'increase')
-    if order == 'increase'
-      puts @items.sort { |a, b| a.price <=> b.price }
-    elsif order == 'decrease'
-      puts @items.sort { |a, b| b.price <=> a.price }
-    end
+    sort_items = sort_items.reverse! if order == 'decrease'
   end
 end
